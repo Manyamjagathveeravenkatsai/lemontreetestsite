@@ -124,78 +124,72 @@ footer {
     <span>How can I help you?</span>
 </div>
 
-<!-- ✅ SALESFORCE CHAT INIT -->
 <script>
-    function initEmbeddedMessaging() {
-        try {
-            embeddedservice_bootstrap.settings.language = 'en_US';
-    
-            embeddedservice_bootstrap.init(
-                '00DBg000002ynd0',
-                'LemonAid_Chat',
-                'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
-                {
-                    scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
-                }
-            );
-        } catch (err) {
-            console.error('Error loading Embedded Messaging: ', err);
-        }
-    }
+function initEmbeddedMessaging() {
+    try {
+        embeddedservice_bootstrap.settings.language = 'en_US';
 
-    function handleChatPopup() {
-    
-        let popup = document.getElementById("chatPopup");
-    
-        const observer = new MutationObserver(() => {
-            const btn = document.querySelector('.embeddedMessagingConversationButton');
-    
-            if (btn) {
-    
-                // Show popup after 3 sec
-                setTimeout(() => {
-                    popup.style.display = "block";
-                }, 3000);
-    
-                // Hide popup when chat opens
-                btn.addEventListener("click", () => {
-                    popup.style.display = "none";
-                });
-    
-                // Detect chat open/close
-                const chatObserver = new MutationObserver(() => {
-                    const chatIframe = document.querySelector("iframe");
-    
-                    if (chatIframe) {
-                        popup.style.display = "none";
-                    } else {
-                        popup.style.display = "block";
-                    }
-                });
-    
-                chatObserver.observe(document.body, {
-                    childList: true,
-                    subtree: true
-                });
+        embeddedservice_bootstrap.init(
+            '00DBg000002ynd0',
+            'LemonAid_Chat',
+            'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
+            {
+                scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
             }
-        });
-    
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    
-        // Click popup → open chat
-        popup.onclick = function () {
-            document.querySelector('.embeddedMessagingConversationButton')?.click();
-        };
+        );
+    } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
     }
+}
+
+function handleChatPopup() {
+
+    let popup = document.getElementById("chatPopup");
+
+    const observer = new MutationObserver(() => {
+        const btn = document.querySelector('.embeddedMessagingConversationButton');
+
+        if (btn && !popup.dataset.initialized) {
+
+            popup.dataset.initialized = "true";
+
+            // Show popup after 3 sec
+            setTimeout(() => {
+                popup.style.display = "block";
+            }, 3000);
+
+            // Hide popup when chat opens
+            btn.addEventListener("click", () => {
+                popup.style.display = "none";
+            });
+
+            // Detect chat open/close
+            const chatObserver = new MutationObserver(() => {
+                const chatIframe = document.querySelector("iframe");
+
+                if (chatIframe) {
+                    popup.style.display = "none";
+                } else {
+                    popup.style.display = "block";
+                }
+            });
+
+            chatObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
     });
 
     observer.observe(document.body, {
         childList: true,
         subtree: true
     });
+
+    // Click popup → open chat
+    popup.onclick = function () {
+        document.querySelector('.embeddedMessagingConversationButton')?.click();
+    };
 }
 </script>
 
