@@ -149,21 +149,21 @@ function handleChatPopup() {
     const observer = new MutationObserver(() => {
         const btn = document.querySelector('.embeddedMessagingConversationButton');
 
-        if (btn && !popup.dataset.initialized) {
+        if (btn && !popup.dataset.init) {
 
-            popup.dataset.initialized = "true";
+            popup.dataset.init = "true";
 
             // Show popup after 3 sec
             setTimeout(() => {
                 popup.style.display = "block";
             }, 3000);
 
-            // Hide popup when chat opens
+            // Hide when chat opens
             btn.addEventListener("click", () => {
                 popup.style.display = "none";
             });
 
-            // Detect chat open/close
+            // Detect open/close
             const chatObserver = new MutationObserver(() => {
                 const chatIframe = document.querySelector("iframe");
 
