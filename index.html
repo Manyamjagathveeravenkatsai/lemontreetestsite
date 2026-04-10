@@ -142,7 +142,17 @@
 <footer>
     <p>&copy; 2026 Luxury Stay Hotel | All Rights Reserved</p>
 </footer>
+
+<button id="chatBtn" onclick="bootstrapChat()" disabled>
+    Loading Chat...
+</button>
+	
 <script type='text/javascript'>
+	let chatInitialized = false;
+    if (chatInitialized) {
+        embeddedservice_bootstrap.open();
+        return;
+    }	
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
@@ -160,6 +170,11 @@
 			console.error('Error loading Embedded Messaging: ', err);
 		}
 	};
+    function enableChatButton() {
+        const btn = document.getElementById("chatBtn");
+        btn.disabled = false;
+        btn.innerText = "Chat with Us";
+    }
 </script>
 <script type='text/javascript' src='https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 </body>
