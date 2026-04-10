@@ -11,8 +11,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* ---------- EXISTING UI ---------- */
-
 header {
     background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center/cover;
     color: white;
@@ -62,34 +60,6 @@ footer {
     padding: 20px;
     text-align: center;
 }
-
-/* ---------- CHAT PROMPT ---------- */
-
-#chatPrompt {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: white;
-    color: black;
-    padding: 12px 14px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-size: 13px;
-    display: none;
-    max-width: 220px;
-    z-index: 9999;
-}
-
-/* arrow */
-#chatPrompt::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    right: 20px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: white transparent transparent transparent;
-}
 </style>
 </head>
 
@@ -124,13 +94,7 @@ footer {
     <p>&copy; 2026 Luxury Stay Hotel</p>
 </footer>
 
-<!-- ✅ CHAT POPUP MESSAGE -->
-<div id="chatPrompt">
-    Hi, I'm Lemonaid 👋 <br>
-    <span>How can I help you?</span>
-</div>
-
-<!-- ✅ SALESFORCE SCRIPT -->
+<!-- ✅ SALESFORCE CHAT INIT -->
 <script>
 function initEmbeddedMessaging() {
     try {
@@ -149,37 +113,34 @@ function initEmbeddedMessaging() {
     }
 }
 
-/* ---------- SHOW PROMPT AFTER BUTTON LOAD ---------- */
-function showChatPrompt() {
-
-    let check = setInterval(function () {
+/* ✅ CHANGE TOOLTIP TEXT */
+function customizeChatButton() {
+    const observer = new MutationObserver(() => {
         const btn = document.querySelector('.embeddedMessagingConversationButton');
 
         if (btn) {
-            clearInterval(check);
-
-            // Show after 3 sec
-            setTimeout(() => {
-                document.getElementById("chatPrompt").style.display = "block";
-            }, 3000);
-
-            // Hide after 10 sec
-            setTimeout(() => {
-                document.getElementById("chatPrompt").style.display = "none";
-            }, 10000);
-
-            // Click popup → open chat
-            document.getElementById("chatPrompt").onclick = function () {
-                btn.click();
-            };
+            btn.setAttribute(
+                "title",
+                "Hi, I'm Lemonaid 👋 How can I help you?"
+            );
+            btn.setAttribute(
+                "aria-label",
+                "Hi, I'm Lemonaid 👋 How can I help you?"
+            );
         }
-    }, 500);
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 </script>
 
+<!-- ✅ LOAD SALESFORCE SCRIPT -->
 <script 
 src="https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638/assets/js/bootstrap.min.js"
-onload="initEmbeddedMessaging(); showChatPrompt();">
+onload="initEmbeddedMessaging(); customizeChatButton();">
 </script>
 
 </body>
