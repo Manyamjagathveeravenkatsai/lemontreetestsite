@@ -146,6 +146,7 @@
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+			embedded_svc.settings.displayHelpButton = 'Click me to show the Embedded Chat experience.';
 
 			embeddedservice_bootstrap.init(
 				'00DBg000002ynd0',
@@ -161,8 +162,5 @@
 	};
 </script>
 <script type='text/javascript' src='https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
-<button onclick="bootstrapChat()">
-	Click me to show the Embedded Chat experience.
-</button>
 </body>
 </html>
