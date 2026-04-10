@@ -1,124 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Stay Hotel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Stay Hotel</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
-        header {
-            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center/cover;
-            color: white;
-            padding: 100px 20px;
-            text-align: center;
-        }
+/* ---------- EXISTING UI ---------- */
 
-        header h1 {
-            font-size: 50px;
-            margin: 0;
-        }
+header {
+    background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center/cover;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
 
-        nav {
-            background: #333;
-            padding: 10px;
-            text-align: center;
-        }
+nav {
+    background: #333;
+    padding: 10px;
+    text-align: center;
+}
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
 
-        nav a:hover {
-            color: #f4b400;
-        }
+section {
+    padding: 40px;
+    text-align: center;
+}
 
-        section {
-            padding: 40px;
-            text-align: center;
-        }
+.rooms {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-        .rooms {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+.room-card {
+    border: 1px solid #ddd;
+    margin: 15px;
+    width: 250px;
+    padding: 15px;
+    border-radius: 10px;
+}
 
-        .room-card {
-            border: 1px solid #ddd;
-            margin: 15px;
-            width: 250px;
-            padding: 15px;
-            border-radius: 10px;
-        }
+.room-card img {
+    width: 100%;
+    border-radius: 10px;
+}
 
-        .room-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
+footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-        footer {
-            background: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+/* ---------- CHAT PROMPT ---------- */
 
-        button {
-            padding: 10px 20px;
-            background: #f4b400;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+#chatPrompt {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: white;
+    color: black;
+    padding: 12px 14px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-size: 13px;
+    display: none;
+    max-width: 220px;
+    z-index: 9999;
+}
 
-        button:hover {
-            background: #d89b00;
-        }
-	#chatPrompt {
-	    position: fixed;
-	    bottom: 90px;
-	    right: 20px;
-	    background: white;
-	    color: black;
-	    padding: 12px 14px;
-	    border-radius: 12px;
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-	    font-size: 13px;
-	    display: none;
-	    animation: fadeIn 0.5s ease-in-out;
-	}
-
-	#chatPrompt span {
-	    font-size: 12px;
-	    color: #555;
-	}
-	
-	#chatBtn {
-	    position: fixed;
-	    bottom: 20px;
-	    right: 20px;
-	    background: #7AC143;
-	    color: white;
-	    border-radius: 50%;
-	    padding: 15px;
-	    border: none;
-	    cursor: pointer;
-	    font-size: 18px;
-	}
-	
-	@keyframes fadeIn {
-	    from { opacity: 0; transform: translateY(10px); }
-	    to { opacity: 1; transform: translateY(0); }
-	}
-    </style>
+/* arrow */
+#chatPrompt::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    right: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+</style>
 </head>
 
 <body>
@@ -126,115 +98,89 @@
 <header>
     <h1>Luxury Stay Hotel</h1>
     <p>Your Comfort, Our Priority</p>
-    <button>Book Now</button>
 </header>
 
 <nav>
     <a href="#about">About</a>
     <a href="#rooms">Rooms</a>
-    <a href="#services">Services</a>
     <a href="#contact">Contact</a>
 </nav>
 
 <section id="about">
     <h2>About Us</h2>
-    <p>Welcome to Luxury Stay Hotel, where elegance meets comfort. Enjoy world-class services and a relaxing atmosphere.</p>
 </section>
 
 <section id="rooms">
-    <h2>Our Rooms</h2>
+    <h2>Rooms</h2>
     <div class="rooms">
         <div class="room-card">
-            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32" alt="Room">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32">
             <h3>Deluxe Room</h3>
-            <p>Spacious room with modern amenities.</p>
-        </div>
-
-        <div class="room-card">
-            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b" alt="Room">
-            <h3>Suite</h3>
-            <p>Luxury suite with premium facilities.</p>
-        </div>
-
-        <div class="room-card">
-            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" alt="Room">
-            <h3>Standard Room</h3>
-            <p>Comfortable and affordable stay.</p>
         </div>
     </div>
 </section>
 
-<section id="services">
-    <h2>Our Services</h2>
-    <p>✔ Free Wi-Fi &nbsp; ✔ Swimming Pool &nbsp; ✔ Spa &nbsp; ✔ Restaurant &nbsp; ✔ 24/7 Room Service</p>
-</section>
-
-<section id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: info@luxurystay.com</p>
-    <p>Phone: +91 9876543210</p>
-</section>
-
 <footer>
-    <p>&copy; 2026 Luxury Stay Hotel | All Rights Reserved</p>
+    <p>&copy; 2026 Luxury Stay Hotel</p>
 </footer>
+
+<!-- ✅ CHAT POPUP MESSAGE -->
 <div id="chatPrompt">
     Hi, I'm Lemonaid 👋 <br>
     <span>How can I help you?</span>
 </div>
 
-<button id="chatBtn" onclick="bootstrapChat()" disabled>
-    💬
-</button>
-
-
+<!-- ✅ SALESFORCE SCRIPT -->
 <script>
-	let chatInitialized = false;
-	
-	function bootstrapChat() {
-	
-	    if (chatInitialized) {
-	        embeddedservice_bootstrap.open();
-	        return;
-	    }
-	
-	    try {
-	        chatInitialized = true;
-	
-	        embeddedservice_bootstrap.settings.language = 'en_US';
-	
-	        embeddedservice_bootstrap.init(
-	            '00DBg000002ynd0',
-	            'LemonAid_Chat',
-	            'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
-	            {
-	                scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
-	            }
-	        );
-	
-	    } catch (err) {
-	        console.error('Error loading Embedded Messaging: ', err);
-	    }
-	}
-	
-	function enableChatUI() {
-	    document.getElementById("chatBtn").disabled = false;
-	
-	    // Show popup after 3 sec
-	    setTimeout(() => {
-	        document.getElementById("chatPrompt").style.display = "block";
-	    }, 3000);
-	
-	    // Hide after 10 sec
-	    setTimeout(() => {
-	        document.getElementById("chatPrompt").style.display = "none";
-	    }, 10000);
-	}
+function initEmbeddedMessaging() {
+    try {
+        embeddedservice_bootstrap.settings.language = 'en_US';
+
+        embeddedservice_bootstrap.init(
+            '00DBg000002ynd0',
+            'LemonAid_Chat',
+            'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
+            {
+                scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
+            }
+        );
+    } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+    }
+}
+
+/* ---------- SHOW PROMPT AFTER BUTTON LOAD ---------- */
+function showChatPrompt() {
+
+    let check = setInterval(function () {
+        const btn = document.querySelector('.embeddedMessagingConversationButton');
+
+        if (btn) {
+            clearInterval(check);
+
+            // Show after 3 sec
+            setTimeout(() => {
+                document.getElementById("chatPrompt").style.display = "block";
+            }, 3000);
+
+            // Hide after 10 sec
+            setTimeout(() => {
+                document.getElementById("chatPrompt").style.display = "none";
+            }, 10000);
+
+            // Click popup → open chat
+            document.getElementById("chatPrompt").onclick = function () {
+                btn.click();
+            };
+        }
+    }, 500);
+}
 </script>
+
 <script 
-src='https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638/assets/js/bootstrap.min.js' 
-onload="enableChatUI()">
+src="https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638/assets/js/bootstrap.min.js"
+onload="initEmbeddedMessaging(); showChatPrompt();">
 </script>
-	
+
 </body>
 </html>
