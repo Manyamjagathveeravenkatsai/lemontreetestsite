@@ -113,20 +113,53 @@ function initEmbeddedMessaging() {
     }
 }
 
-/* ✅ CHANGE TOOLTIP TEXT */
+/* ✅ CUSTOM TOOLTIP LOGIC */
 function customizeChatButton() {
+
     const observer = new MutationObserver(() => {
         const btn = document.querySelector('.embeddedMessagingConversationButton');
 
-        if (btn) {
-            btn.setAttribute(
-                "title",
-                "Hi, I'm Lemonaid 👋 How can I help you?"
-            );
-            btn.setAttribute(
-                "aria-label",
-                "Hi, I'm Lemonaid 👋 How can I help you?"
-            );
+        if (btn && !document.getElementById("customTooltip")) {
+
+            // ✅ Create tooltip
+            const tooltip = document.createElement("div");
+            tooltip.id = "customTooltip";
+            tooltip.innerText = "Hi, I'm Lemonaid 👋 How can I help you?";
+
+            tooltip.style.position = "fixed";
+            tooltip.style.bottom = "90px";
+            tooltip.style.right = "20px";
+            tooltip.style.background = "white";
+            tooltip.style.padding = "10px 14px";
+            tooltip.style.borderRadius = "10px";
+            tooltip.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+            tooltip.style.fontSize = "13px";
+            tooltip.style.zIndex = "9999";
+
+            document.body.appendChild(tooltip);
+
+            // ✅ Hide when chat opens
+            btn.addEventListener("click", () => {
+                tooltip.style.display = "none";
+            });
+
+            // ✅ Watch chat window open/close
+            const chatObserver = new MutationObserver(() => {
+                const chatWindow = document.querySelector('iframe');
+
+                if (chatWindow) {
+                    // Chat is open → hide tooltip
+                    tooltip.style.display = "none";
+                } else {
+                    // Chat is closed → show again
+                    tooltip.style.display = "block";
+                }
+            });
+
+            chatObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
         }
     });
 
