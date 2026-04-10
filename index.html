@@ -60,6 +60,32 @@ footer {
     padding: 20px;
     text-align: center;
 }
+    
+    #chatPopup {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        background: white;
+        color: black;
+        padding: 12px 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        font-size: 13px;
+        max-width: 220px;
+        display: none;
+        z-index: 9999;
+    }
+    
+    /* arrow */
+    #chatPopup::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        right: 20px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: white transparent transparent transparent;
+    }
 </style>
 </head>
 
@@ -93,74 +119,77 @@ footer {
 <footer>
     <p>&copy; 2026 Luxury Stay Hotel</p>
 </footer>
+<div id="chatPopup">
+    Hi, I'm Lemonaid 👋 <br>
+    <span>How can I help you?</span>
+</div>
 
 <!-- ✅ SALESFORCE CHAT INIT -->
 <script>
-function initEmbeddedMessaging() {
-    try {
-        embeddedservice_bootstrap.settings.language = 'en_US';
-
-        embeddedservice_bootstrap.init(
-            '00DBg000002ynd0',
-            'LemonAid_Chat',
-            'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
-            {
-                scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
-            }
-        );
-    } catch (err) {
-        console.error('Error loading Embedded Messaging: ', err);
-    }
-}
-
-/* ✅ CUSTOM TOOLTIP LOGIC */
-function customizeChatButton() {
-
-    const observer = new MutationObserver(() => {
-        const btn = document.querySelector('.embeddedMessagingConversationButton');
-
-        if (btn && !document.getElementById("customTooltip")) {
-
-            // ✅ Create tooltip
-            const tooltip = document.createElement("div");
-            tooltip.id = "customTooltip";
-            tooltip.innerText = "Hi, I'm Lemonaid 👋 How can I help you?";
-
-            tooltip.style.position = "fixed";
-            tooltip.style.bottom = "90px";
-            tooltip.style.right = "20px";
-            tooltip.style.background = "white";
-            tooltip.style.padding = "10px 14px";
-            tooltip.style.borderRadius = "10px";
-            tooltip.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-            tooltip.style.fontSize = "13px";
-            tooltip.style.zIndex = "9999";
-
-            document.body.appendChild(tooltip);
-
-            // ✅ Hide when chat opens
-            btn.addEventListener("click", () => {
-                tooltip.style.display = "none";
-            });
-
-            // ✅ Watch chat window open/close
-            const chatObserver = new MutationObserver(() => {
-                const chatWindow = document.querySelector('iframe');
-
-                if (chatWindow) {
-                    // Chat is open → hide tooltip
-                    tooltip.style.display = "none";
-                } else {
-                    // Chat is closed → show again
-                    tooltip.style.display = "block";
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'en_US';
+    
+            embeddedservice_bootstrap.init(
+                '00DBg000002ynd0',
+                'LemonAid_Chat',
+                'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.site.com/ESWLemonAidChat1773823427638',
+                {
+                    scrt2URL: 'https://totallyfoxedsolutionsprivatelimite--ltpreprod.sandbox.my.salesforce-scrt.com'
                 }
-            });
-
-            chatObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
         }
+    }
+
+    function handleChatPopup() {
+    
+        let popup = document.getElementById("chatPopup");
+    
+        const observer = new MutationObserver(() => {
+            const btn = document.querySelector('.embeddedMessagingConversationButton');
+    
+            if (btn) {
+    
+                // Show popup after 3 sec
+                setTimeout(() => {
+                    popup.style.display = "block";
+                }, 3000);
+    
+                // Hide popup when chat opens
+                btn.addEventListener("click", () => {
+                    popup.style.display = "none";
+                });
+    
+                // Detect chat open/close
+                const chatObserver = new MutationObserver(() => {
+                    const chatIframe = document.querySelector("iframe");
+    
+                    if (chatIframe) {
+                        popup.style.display = "none";
+                    } else {
+                        popup.style.display = "block";
+                    }
+                });
+    
+                chatObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
+    
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    
+        // Click popup → open chat
+        popup.onclick = function () {
+            document.querySelector('.embeddedMessagingConversationButton')?.click();
+        };
+    }
     });
 
     observer.observe(document.body, {
